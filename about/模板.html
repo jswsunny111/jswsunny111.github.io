@@ -18,9 +18,23 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>分类 - JavaScript - Hexo</title>
+  <title>模板 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
 
 
 
@@ -142,12 +156,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/1.jpg') no-repeat center center;
+         style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Category - JavaScript">
+            <span class="h2" id="subtitle" title="模板">
               
             </span>
 
@@ -171,43 +185,32 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">4 posts in total.</p>
-  <hr>
-  
-  
-    
-      
-      <p class="h5">2021</p>
-    
-    <a href="/2021/07/26/%E5%8E%9F%E7%94%9F1/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">原生js训练1</span>
-      <time style="float: right;">07-26</time>
-    </a>
-  
-    
-    <a href="/2021/06/29/%E9%98%85%E8%AF%BB%E5%99%A8/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">实现阅读器功能</span>
-      <time style="float: right;">06-29</time>
-    </a>
-  
-    
-    <a href="/2021/06/28/%E6%BB%9A%E5%8A%A8%E4%BA%A7%E7%94%9F%E5%9B%BE%E7%89%87/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">图片随屏幕滚动而滑入滑出</span>
-      <time style="float: right;">06-28</time>
-    </a>
-  
-    
-    <a href="/2021/06/26/%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">防抖/节流</span>
-      <time style="float: right;">06-26</time>
-    </a>
-  
-</div>
+<article class="page-content">
+  <h3 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h3><p>浏览文本，当即将浏览到图片时，进行加载动画。</p>
+<h4 id="主要"><a href="#主要" class="headerlink" title="主要"></a>主要</h4><blockquote>
+<p>css 部分</p>
+</blockquote>
+<ul>
+<li>  scale 控制图片缩放</li>
+<li>  translateX 来控制左右移动</li>
+</ul>
+<blockquote>
+<p>js 部分</p>
+</blockquote>
+<ul>
+<li>  window.scrolly 纵向滚动距离</li>
+<li>  window.innerHeight viewport 部分高度</li>
+<li>  el.height 节点的高度</li>
+<li>  el.offsetTop 当前元素节点至顶的距离 相对于浏览器窗口</li>
+</ul>
+<blockquote>
+<p><code>debounce</code> 的作用： 降低事件监听的频率，使用了 Lodash 中的 debounce 方法。</p>
+</blockquote>
+<h3 id="在线地址"><a href="#在线地址" class="headerlink" title="在线地址"></a>在线地址</h3><h3 id="初始代码"><a href="#初始代码" class="headerlink" title="初始代码"></a>初始代码</h3><h3 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h3><p><code>![BG图片](/img/default.jpg)</code><br><img src="/img/1.jpg" srcset="/img/loading.gif" lazyload alt="BG图片"></p>
 
 
-
-
+  
+</article>
 
               </div>
             </div>
@@ -296,6 +299,8 @@
 
 
 
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
 
 
 
