@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>Vue指令学习 - Hexo</title>
+  <title>混入mixins - 不少头发的程序猿</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Vue指令学习">
+            <span class="h2" id="subtitle" title="混入mixins">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-28 20:37" pubdate>
-        July 28, 2021 pm
+      <time datetime="2021-07-13 21:22" pubdate>
+        July 13, 2021 pm
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      965 字
+      378 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      4
        分钟
     </span>
   
@@ -225,55 +225,27 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Vue指令学习</h1>
+            <h1 style="display: none">混入mixins</h1>
             
             <div class="markdown-body">
-              <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>在 vue 中提供了一些对于页面 + 数据的更为方便的输出,这些操作就叫做指令, 以 v-xxx 表示</p>
-<h3 id="vue-中常用的-v-指令"><a href="#vue-中常用的-v-指令" class="headerlink" title="vue 中常用的 v-指令"></a>vue 中常用的 v-指令</h3><ul>
-<li>  v-text 其实就是给元素的 innerText 赋值，只能用在双标签中 相当于插值表达试 <code>&#123;&#123;&#125;&#125;</code></li>
-<li>  v-html 就是给元素的 innerHTML 赋值</li>
-<li>  v-if 判断是否插入这个元素</li>
-<li>  v-else-if 判断是否插入这个元素</li>
-<li>  v-else 判断是否插入这个元素</li>
-<li>v-show 隐藏元素 如果确定要隐藏, 会给元素的 style 加上 display:none<blockquote>
-<p>v-if 家族都是对元素进行插入和移除的操作 v-show 是显示与否的问题。 v-if 家族使用必须是相同嵌套层相邻的 兄弟元素</p>
+              <h3 id="混入（mixins）"><a href="#混入（mixins）" class="headerlink" title="混入（mixins）"></a><a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/mixins.html">混入（mixins）</a></h3><ul>
+<li>  官网指出： 混入 (mixin) 提供了一种非常灵活的方式，来分发 Vue 组件中的可复用功能。一个混入对象可以包含任意组件选项。当组件使用混入对象时，所有混入对象的选项将被“混合”进入该组件本身的选项。</li>
+<li>  当组件和混入对象含有同名选项时，这些选项将以恰当的方式进行“合并”。</li>
+<li>  同名钩子函数将合并为一个数组，因此都将被调用。另外，混入对象的钩子将在组件自身钩子之前调用。</li>
+</ul>
+<h2 id="主要"><a href="#主要" class="headerlink" title="主要"></a>主要</h2><blockquote>
+<p>定义看不懂</p>
 </blockquote>
-</li>
-<li>  v-model 双向数据绑定,针对的 js 内存对象,写在那个元素上，就对哪个元素操作</li>
-<li>v-bind 可以给已经存在的属性赋值 input value 简写方式 v-bind:xx=”x” =&gt; :xx=”x”<blockquote>
-<p>v-bind 和 v-model 的区别，在于，双向数据绑定 页面对于 input 的 value 改变，能影响内存中 name 变量，内存 js 改变 name 的值，会影响页面重新渲染最新值。bind,单向数据绑定 内存改变影响页面改变</p>
+<h4 id="定义混入组件"><a href="#定义混入组件" class="headerlink" title="定义混入组件"></a>定义混入组件</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>    <span class="hljs-function"><span class="hljs-title">data</span>(<span class="hljs-params"></span>)</span> &#123;<br>        <span class="hljs-keyword">return</span> &#123;<br>            <span class="hljs-attr">num</span> : <span class="hljs-number">0</span><br>        &#125;<br>    &#125;,<br>    <span class="hljs-attr">methods</span>: &#123;<br>        <span class="hljs-function"><span class="hljs-title">handleclick</span>(<span class="hljs-params"></span>)</span>&#123;<br>            <span class="hljs-built_in">this</span>.num = <span class="hljs-built_in">this</span>.num ++<br>        &#125;<br>    &#125;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<h4 id="混入引用到组件（局部）"><a href="#混入引用到组件（局部）" class="headerlink" title="混入引用到组件（局部）"></a>混入引用到组件（局部）</h4><p>总的说是混入到这里面就是和所有的重合到一起，这样可以获取到混入组件的相关内容了</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="xml">   <span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">num</span>&#125;&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;handleclick&quot;</span>&gt;</span>点击每次加1<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br><span class="xml"></span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="javascript"><span class="xml"><span class="hljs-keyword">import</span> minin <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./minxin/minxin&#x27;</span></span></span><br><span class="javascript"><span class="xml"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="javascript"><span class="xml">  <span class="hljs-attr">mixins</span>: [minin],</span></span><br><span class="javascript"><span class="xml">  <span class="hljs-function"><span class="hljs-title">data</span>(<span class="hljs-params"></span>)</span>&#123;</span></span><br><span class="javascript"><span class="xml">    <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="javascript"><span class="xml">    &#125;</span></span><br><span class="javascript"><span class="xml">  &#125;,</span></span><br><span class="javascript"><span class="xml">  <span class="hljs-attr">methods</span>: &#123;</span></span><br><span class="javascript"><span class="xml">  &#125;</span></span><br><span class="javascript"><span class="xml">&#125;</span></span><br><span class="javascript"><span class="xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<h2 id="全局混入"><a href="#全局混入" class="headerlink" title="全局混入"></a>全局混入</h2><blockquote>
+<p>定义全局混入,main.js 中引入。在需要的使用的页面直接使用，不需要再引入（使用方法同局部混入）</p>
 </blockquote>
-</li>
-<li>  v-on 处理自定义原生事件的,给按钮添加 click 并让使用变量的样式改变 简写： v-on:fn=”表达式||函数名” =&gt; @fn=”表达式||函数名”</li>
-<li>v-for 循环遍历数据 v-for=”(item,index) in arr” v-for=”(value,key,index) in Obj”<blockquote>
-<p>key 值， 都会说要拿一个唯一识别做渲染。由于 Vue 和 React 的虚拟 DOM diff 算法大致相同，我们需要使用 key 来给每个节点做一个唯一标识，Diff 算法就可以正确的识别此节点，找到正确的位置区插入新的节点，节约性能，更高效的更新 virtual DOM <a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/api/#key">key 值运用</a></p>
-</blockquote>
-</li>
-</ul>
-<h3 id="不常用"><a href="#不常用" class="headerlink" title="不常用"></a>不常用</h3><ul>
-<li>  v-pre 主要用来跳过这个元素和它的子元素编译过程</li>
-<li>  v-cloak 这个指令是用来保持在元素上直到关联实例结束时进行编译。</li>
-<li>  v-once 关联的实例，只会渲染一次。之后的重新渲染，实例极其所有的子节点将被视为静态内容跳过，这可以用于优化更新性能。</li>
-</ul>
-<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><h4 id="v-on-事件修饰符"><a href="#v-on-事件修饰符" class="headerlink" title="v-on / @ 事件修饰符"></a>v-on / @ 事件修饰符</h4><ul>
-<li>  .stop 阻止事件继续传播冒泡</li>
-<li>  .prevent 事件不再重载</li>
-<li>  .capture 使用事件捕获模式,即元素自身触发的事件先在此处处理，然后才交由内部元素进行处理</li>
-<li>  .self 只当在 event.target 是当前元素自身时触发处理函数</li>
-<li>  .once 事件将只会触发一次</li>
-<li>  .passive 告诉浏览器你不想阻止事件的默认行为</li>
-</ul>
-<h4 id="v-model-修饰符"><a href="#v-model-修饰符" class="headerlink" title="v-model 修饰符"></a>v-model 修饰符</h4><ul>
-<li>  .lazy 默认情况下，v-model 同步输入框的值和数据。可以通过这个修饰符，转变为在 change 事件再同步。</li>
-<li>  .number 自动将用户的输入值转化为数值类型。 会转换成 NAN</li>
-<li>  .trim 自动过滤用户输入的首尾空格，string 格式</li>
-</ul>
-<h4 id="自定义事件修饰符"><a href="#自定义事件修饰符" class="headerlink" title="自定义事件修饰符"></a>自定义事件修饰符</h4><ul>
-<li>  .sync 只是作为一个编译时的语法糖存在。它会被扩展为一个自动更新父组件属性的 v-on 监听器。当一个子组件改变了一个 prop 的值时，这个变化也会同步到父组件中所绑定。如果我们不用.sync，我们想做上面的那个弹窗功能，我们也可以 props 传初始值，然后事件监听，实现起来也不算复杂。</li>
-</ul>
-<blockquote>
-<p>修饰符可以串联使用，但要注意顺序。例如： 用 v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。</p>
-</blockquote>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">Vue.<span class="hljs-keyword">mixin</span>(&#123;<br>    data () &#123;<br>        rerutn &#123;<br><br>        &#125;<br>    &#125;,<br>    create () &#123;&#125;,<br>    methods: &#123;<br>        clgFn()&#123;<br>            console.log(<span class="hljs-string">&#x27;混入的mixin方法&#x27;</span>)<br>        &#125;,<br>    &#125;,<br>&#125;)<br><br></code></pre></td></tr></table></figure>
+
 <p><img src="/img/1.jpg" srcset="/img/loading.gif" lazyload alt="BG图片"></p>
 
             </div>
@@ -309,9 +281,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/29/07-29Vue%E6%8C%87%E4%BB%A4%E6%89%A9%E5%B1%95%E5%AD%A6%E4%B9%A0/">
+                      <a href="/2021/07/16/07-16%E6%BB%9A%E5%8A%A8%E4%BA%A7%E7%94%9F%E5%9B%BE%E7%89%87/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Vue自定义指令学习总结</span>
+                        <span class="hidden-mobile">图片随屏幕滚动而滑入滑出</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -319,8 +291,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/06/07-06Vue%E8%BF%87%E6%BB%A4%E5%99%A8/">
-                        <span class="hidden-mobile">过滤器filter</span>
+                      <a href="/2021/07/09/07-09element%E6%A0%A1%E9%AA%8C/">
+                        <span class="hidden-mobile">表单校验方式</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

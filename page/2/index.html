@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>Hexo</title>
+  <title>不少头发的程序猿</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -182,36 +182,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021/06/28/06-28%E6%BB%9A%E5%8A%A8%E4%BA%A7%E7%94%9F%E5%9B%BE%E7%89%87/" target="_self">
-          图片随屏幕滚动而滑入滑出
+        <a href="/2021/07/02/07-02%E5%8E%9F%E7%94%9F1/" target="_self">
+          原生js训练1
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021/06/28/06-28%E6%BB%9A%E5%8A%A8%E4%BA%A7%E7%94%9F%E5%9B%BE%E7%89%87/" target="_self">
+        <a href="/2021/07/02/07-02%E5%8E%9F%E7%94%9F1/" target="_self">
           
           
             
           
-          实现效果浏览文本，当即将浏览到图片时，进行加载动画。
-主要
-css 部分
-
-
-  scale 控制图片缩放
-  translateX 来控制左右移动
-
-
-js 部分
-
-
-  window.scrolly 纵向滚动距离
-  window.innerHeight viewport 部分高度
-  el.height 节点的高度
-  el.offsetTop 当前元素节点至顶的距离 相对于浏览器窗口
-
-
-
+          实现效果模拟一个打鼓的页面。用户在键盘上按下 ASDFGHJKL 这几个键时，页面上与字母对应的按钮变大变亮，对应的鼓点声音响起来。
+在线效果点击查看在线效果
+实列代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626
         </a>
       </p>
 
@@ -219,8 +203,66 @@ js 部分
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-28 21:27" pubdate>
-              2021-06-28
+            <time datetime="2021-07-02 21:11" pubdate>
+              2021-07-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8E%9F%E7%94%9F/">原生</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/06/29/06-29%E9%98%85%E8%AF%BB%E5%99%A8/" target="_self">
+          实现阅读器功能
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/06/29/06-29%E9%98%85%E8%AF%BB%E5%99%A8/" target="_self">
+          
+          
+            
+          
+          实现效果输入一段文字，将其播放。
+
+  使用相应的 WebAPI 接口获得浏览器支持的语言种类列表，并填充至页面的下拉菜单中，选择中文;
+  在文本域中输入对应语言的文字，点击speak按钮后浏览器会阅读输入的文字；
+  在浏览器阅读时，点击stop按钮，浏览器会停止阅读；
+  拖动rate和pitch滑块可改变阅读速度和音高。
+
+主要
+SpeechSynthesisUtterance接口  本接
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-29 21:27" pubdate>
+              2021-06-29
             </time>
           </div>
         

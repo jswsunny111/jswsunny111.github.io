@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>过滤器filter - Hexo</title>
+  <title>Vue指令学习 - 不少头发的程序猿</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="过滤器filter">
+            <span class="h2" id="subtitle" title="Vue指令学习">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-07-06 20:10" pubdate>
-        July 6, 2021 pm
+      <time datetime="2021-07-22 20:37" pubdate>
+        July 22, 2021 pm
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      235 字
+      965 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      10
        分钟
     </span>
   
@@ -225,20 +225,55 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">过滤器filter</h1>
+            <h1 style="display: none">Vue指令学习</h1>
             
             <div class="markdown-body">
-              <h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a><a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/filters.html">过滤器</a></h3><h2 id="全局过滤器"><a href="#全局过滤器" class="headerlink" title="全局过滤器"></a>全局过滤器</h2><p>我们可以直接在 vue 对象上使用 filter 方法注册过滤器，这种全局注册的过滤器在任何一个组件内都可以使用。</p>
-<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs qml">Vue.filter(<span class="hljs-string">&#x27;formatTime&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) </span>&#123;<br>  <span class="hljs-keyword">const</span> <span class="hljs-built_in">date</span> = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(val);<br>  <span class="hljs-keyword">const</span> hour = <span class="hljs-built_in">date</span>.getHours();<br>  <span class="hljs-keyword">const</span> minutes = <span class="hljs-built_in">date</span>.getMinutes();<br>  <span class="hljs-keyword">const</span> seconds = <span class="hljs-built_in">date</span>.getSeconds();<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;hour&#125;</span> : <span class="hljs-subst">$&#123;minutes&#125;</span> : <span class="hljs-subst">$&#123;seconds&#125;</span>`</span>;<br>&#125;)<br></code></pre></td></tr></table></figure>
-
-<h4 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h4><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span></span><br><span class="xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>vue过滤器<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123; <span class="hljs-name">new</span> Date() | formatTime&#125;&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="xml">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123; <span class="hljs-name">1627742058904</span> | formatTime&#125;&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>可以串联使用 <code>&#123;&#123; value | filterA | filterB &#125;&#125; </code><br>可以传递参数<code>接收参数 &#123;&#123; value | filterA('arg1') &#125;&#125;</code></p>
+              <h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>在 vue 中提供了一些对于页面 + 数据的更为方便的输出,这些操作就叫做指令, 以 v-xxx 表示</p>
+<h3 id="vue-中常用的-v-指令"><a href="#vue-中常用的-v-指令" class="headerlink" title="vue 中常用的 v-指令"></a>vue 中常用的 v-指令</h3><ul>
+<li>  v-text 其实就是给元素的 innerText 赋值，只能用在双标签中 相当于插值表达试 <code>&#123;&#123;&#125;&#125;</code></li>
+<li>  v-html 就是给元素的 innerHTML 赋值</li>
+<li>  v-if 判断是否插入这个元素</li>
+<li>  v-else-if 判断是否插入这个元素</li>
+<li>  v-else 判断是否插入这个元素</li>
+<li>v-show 隐藏元素 如果确定要隐藏, 会给元素的 style 加上 display:none<blockquote>
+<p>v-if 家族都是对元素进行插入和移除的操作 v-show 是显示与否的问题。 v-if 家族使用必须是相同嵌套层相邻的 兄弟元素</p>
 </blockquote>
-<h2 id="局部注册"><a href="#局部注册" class="headerlink" title="局部注册"></a>局部注册</h2><p>注册组件内部过滤器则只能在当前组件内使用</p>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">export default&#123;<br>    data <span class="hljs-literal">()</span> &#123;<br>        return &#123;&#125;<br>    &#125;,<br>    filters: &#123;<br>        format<span class="hljs-constructor">Time(<span class="hljs-params">val</span>,<span class="hljs-params">type</span>)</span>&#123;<br>            <span class="hljs-keyword">if</span>(<span class="hljs-keyword">type</span>)&#123;<br>              return  <span class="hljs-keyword">new</span> <span class="hljs-constructor">Date(<span class="hljs-params">val</span>)</span>.form<span class="hljs-constructor">Date(<span class="hljs-params">type</span>)</span><br>            &#125;<br>          return <span class="hljs-keyword">new</span> <span class="hljs-constructor">Date(<span class="hljs-params">val</span>)</span>.form<span class="hljs-constructor">Date(&#x27;<span class="hljs-params">yyyy</span>-MM-DD <span class="hljs-params">hh</span>:<span class="hljs-params">mm</span>:<span class="hljs-params">ss</span>&#x27;)</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+</li>
+<li>  v-model 双向数据绑定,针对的 js 内存对象,写在那个元素上，就对哪个元素操作</li>
+<li>v-bind 可以给已经存在的属性赋值 input value 简写方式 v-bind:xx=”x” =&gt; :xx=”x”<blockquote>
+<p>v-bind 和 v-model 的区别，在于，双向数据绑定 页面对于 input 的 value 改变，能影响内存中 name 变量，内存 js 改变 name 的值，会影响页面重新渲染最新值。bind,单向数据绑定 内存改变影响页面改变</p>
+</blockquote>
+</li>
+<li>  v-on 处理自定义原生事件的,给按钮添加 click 并让使用变量的样式改变 简写： v-on:fn=”表达式||函数名” =&gt; @fn=”表达式||函数名”</li>
+<li>v-for 循环遍历数据 v-for=”(item,index) in arr” v-for=”(value,key,index) in Obj”<blockquote>
+<p>key 值， 都会说要拿一个唯一识别做渲染。由于 Vue 和 React 的虚拟 DOM diff 算法大致相同，我们需要使用 key 来给每个节点做一个唯一标识，Diff 算法就可以正确的识别此节点，找到正确的位置区插入新的节点，节约性能，更高效的更新 virtual DOM <a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/api/#key">key 值运用</a></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="不常用"><a href="#不常用" class="headerlink" title="不常用"></a>不常用</h3><ul>
+<li>  v-pre 主要用来跳过这个元素和它的子元素编译过程</li>
+<li>  v-cloak 这个指令是用来保持在元素上直到关联实例结束时进行编译。</li>
+<li>  v-once 关联的实例，只会渲染一次。之后的重新渲染，实例极其所有的子节点将被视为静态内容跳过，这可以用于优化更新性能。</li>
+</ul>
+<h3 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h3><h4 id="v-on-事件修饰符"><a href="#v-on-事件修饰符" class="headerlink" title="v-on / @ 事件修饰符"></a>v-on / @ 事件修饰符</h4><ul>
+<li>  .stop 阻止事件继续传播冒泡</li>
+<li>  .prevent 事件不再重载</li>
+<li>  .capture 使用事件捕获模式,即元素自身触发的事件先在此处处理，然后才交由内部元素进行处理</li>
+<li>  .self 只当在 event.target 是当前元素自身时触发处理函数</li>
+<li>  .once 事件将只会触发一次</li>
+<li>  .passive 告诉浏览器你不想阻止事件的默认行为</li>
+</ul>
+<h4 id="v-model-修饰符"><a href="#v-model-修饰符" class="headerlink" title="v-model 修饰符"></a>v-model 修饰符</h4><ul>
+<li>  .lazy 默认情况下，v-model 同步输入框的值和数据。可以通过这个修饰符，转变为在 change 事件再同步。</li>
+<li>  .number 自动将用户的输入值转化为数值类型。 会转换成 NAN</li>
+<li>  .trim 自动过滤用户输入的首尾空格，string 格式</li>
+</ul>
+<h4 id="自定义事件修饰符"><a href="#自定义事件修饰符" class="headerlink" title="自定义事件修饰符"></a>自定义事件修饰符</h4><ul>
+<li>  .sync 只是作为一个编译时的语法糖存在。它会被扩展为一个自动更新父组件属性的 v-on 监听器。当一个子组件改变了一个 prop 的值时，这个变化也会同步到父组件中所绑定。如果我们不用.sync，我们想做上面的那个弹窗功能，我们也可以 props 传初始值，然后事件监听，实现起来也不算复杂。</li>
+</ul>
+<blockquote>
+<p>修饰符可以串联使用，但要注意顺序。例如： 用 v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。</p>
+</blockquote>
 <p><img src="/img/1.jpg" srcset="/img/loading.gif" lazyload alt="BG图片"></p>
 
             </div>
@@ -249,7 +284,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/JavaScript/">JavaScript</a>
+                      <a class="hover-with-bg" href="/categories/Vue/">Vue</a>
                     
                   </div>
                 
@@ -257,7 +292,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%8E%9F%E7%94%9F/">原生</a>
+                      <a class="hover-with-bg" href="/tags/Vue/">Vue</a>
                     
                   </div>
                 
@@ -274,9 +309,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/07/28/07-28Vue%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0/">
+                      <a href="/2021/07/24/07-24Vue%E6%8C%87%E4%BB%A4%E6%89%A9%E5%B1%95%E5%AD%A6%E4%B9%A0/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Vue指令学习</span>
+                        <span class="hidden-mobile">Vue自定义指令学习总结</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -284,8 +319,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/07/05/07-05Vue-mixins/">
-                        <span class="hidden-mobile">混入mixins</span>
+                      <a href="/2021/07/19/07-19Vue%E8%BF%87%E6%BB%A4%E5%99%A8/">
+                        <span class="hidden-mobile">过滤器filter</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
