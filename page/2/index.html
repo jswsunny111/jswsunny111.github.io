@@ -182,6 +182,180 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021/07/22/07-22Vue%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0/" target="_self">
+          Vue指令学习
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/07/22/07-22Vue%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0/" target="_self">
+          
+          
+            
+          
+          定义在 vue 中提供了一些对于页面 + 数据的更为方便的输出,这些操作就叫做指令, 以 v-xxx 表示
+vue 中常用的 v-指令
+  v-text 其实就是给元素的 innerText 赋值，只能用在双标签中 相当于插值表达试 &#123;&#123;&#125;&#125;
+  v-html 就是给元素的 innerHTML 赋值
+  v-if 判断是否插入这个元素
+  v-else-if
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-07-22 20:37" pubdate>
+              2021-07-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Vue/">Vue</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Vue/">Vue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/07/19/07-19Vue%E8%BF%87%E6%BB%A4%E5%99%A8/" target="_self">
+          过滤器filter
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/07/19/07-19Vue%E8%BF%87%E6%BB%A4%E5%99%A8/" target="_self">
+          
+          
+            
+          
+          过滤器全局过滤器我们可以直接在 vue 对象上使用 filter 方法注册过滤器，这种全局注册的过滤器在任何一个组件内都可以使用。
+1234567Vue.filter(&#x27;formatTime&#x27;, function (value) &#123;  const date = new Date(val);  const hour = date.getHours();  const m
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-07-19 20:10" pubdate>
+              2021-07-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8E%9F%E7%94%9F/">原生</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021/07/16/07-16%E6%BB%9A%E5%8A%A8%E4%BA%A7%E7%94%9F%E5%9B%BE%E7%89%87/" target="_self">
+          图片随屏幕滚动而滑入滑出
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021/07/16/07-16%E6%BB%9A%E5%8A%A8%E4%BA%A7%E7%94%9F%E5%9B%BE%E7%89%87/" target="_self">
+          
+          
+            
+          
+          实现效果浏览文本，当即将浏览到图片时，进行加载动画。
+主要
+css 部分
+
+
+  scale 控制图片缩放
+  translateX 来控制左右移动
+
+
+js 部分
+
+
+  window.scrolly 纵向滚动距离
+  window.innerHeight viewport 部分高度
+  el.height 节点的高度
+  el.offsetTop 当前元素节点至顶的距离 相对于浏览器窗口
+
+
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-07-16 21:27" pubdate>
+              2021-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8E%9F%E7%94%9F/">原生</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021/07/13/07-13Vue-mixins/" target="_self">
           混入mixins
         </a>
@@ -554,7 +728,7 @@ SpeechSynthesisUtterance接口  本接
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
