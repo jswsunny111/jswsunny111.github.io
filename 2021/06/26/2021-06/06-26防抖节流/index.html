@@ -18,7 +18,7 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-  <title>顶 - 不少头发的程序猿</title>
+  <title>防抖/节流 - 不少头发的程序猿</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="顶">
+            <span class="h2" id="subtitle" title="防抖/节流">
               
             </span>
 
@@ -173,8 +173,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-25 21:19" pubdate>
-        June 25, 2021 pm
+      <time datetime="2021-06-26 09:59" pubdate>
+        June 26, 2021 am
       </time>
     </span>
   
@@ -185,7 +185,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      228 字
+      447 字
     </span>
   
 
@@ -195,7 +195,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      5
        分钟
     </span>
   
@@ -225,50 +225,15 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">顶</h1>
+            <h1 style="display: none">防抖/节流</h1>
             
             <div class="markdown-body">
-              <h1 id="MD-上手指南"><a href="#MD-上手指南" class="headerlink" title="MD 上手指南"></a>MD 上手指南</h1><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs clean"># 一级标签 &gt; &lt;h1&gt;一级标签&lt;/h1&gt;<br>## 二级标签 &gt; &lt;h2&gt;一级标签&lt;/h2&gt;<br>### 三级标签 &gt; &lt;h3&gt;一级标签&lt;/h3&gt;<br>#### 四级标签 &gt; &lt;h4&gt;一级标签&lt;/h4&gt;<br>##### 五级标签 &gt; &lt;h5&gt;一级标签&lt;/h5&gt;<br></code></pre></td></tr></table></figure>
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>防抖和节流是针对响应跟不上触发频率这类问题的两种解决方案。例如：滚动滚动条事件 onscroll，窗口大小改变事件 onresize onclick 防击穿，在实时检查输入时，如果我们绑定 onkeyup 事件发请求去服务端检查，用户输入过程中，事件的触发频率也会很高，会导致大量的请求发出，响应速度会大大跟不上触发等 这些应用场景 我们都可以用上。</p>
+<h3 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h3><p>周期内多次触发事件，周期时间内动作只会执行一次，我们只是用最后一次的操作结果。使用定义 timeout 再次触发就清除之前的时间，取消之前的操作动作。 类似于，打游戏时的法师吟唱效果，有其他操作就会打断施法动作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@desc </span>函数防抖</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param </span>func (function) 函数</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param </span>wait (number) 延迟执行毫秒数</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param </span>immediate (boolean) true 表立即执行，false 表非立即执行</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">debounce</span>(<span class="hljs-params">func, wait = <span class="hljs-number">1000</span>, immediate</span>) </span>&#123;<br>    <span class="hljs-keyword">var</span> timeout<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-keyword">var</span> context = <span class="hljs-built_in">this</span><br>        <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">arguments</span><br>        <span class="hljs-keyword">if</span> (timeout) <span class="hljs-built_in">clearTimeout</span>(timeout)<br>        <span class="hljs-keyword">if</span> (immediate) &#123;<br>            <span class="hljs-keyword">var</span> callNow = !timeout<br>            timeout = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>                timeout = <span class="hljs-literal">null</span><br>            &#125;, wait)<br>            <span class="hljs-keyword">if</span> (callNow) func.apply(context, args)<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            timeout = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>                func.apply(context, args)<br>            &#125;, wait)<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
-<h1 id="一级标签"><a href="#一级标签" class="headerlink" title="一级标签"></a>一级标签</h1><h2 id="二级标签"><a href="#二级标签" class="headerlink" title="二级标签"></a>二级标签</h2><h3 id="三级标签"><a href="#三级标签" class="headerlink" title="三级标签"></a>三级标签</h3><h4 id="四级标签"><a href="#四级标签" class="headerlink" title="四级标签"></a>四级标签</h4><h5 id="五级标签"><a href="#五级标签" class="headerlink" title="五级标签"></a>五级标签</h5><h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><h4 id="无序"><a href="#无序" class="headerlink" title="无序"></a>无序</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">*</span> 1                             · 1<br><span class="hljs-bullet">+</span> 1            &gt; 预览            · 1<br><span class="hljs-bullet">-</span> 1                             · 1<br></code></pre></td></tr></table></figure>
-
-<h4 id="有序"><a href="#有序" class="headerlink" title="有序"></a>有序</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>. 列表                            <span class="hljs-number">1</span>. 列表<br><span class="hljs-attribute">2</span>. 列表            &gt; 预览          <span class="hljs-number">2</span>. 列表<br><span class="hljs-attribute">3</span>. 列表                            <span class="hljs-number">3</span>. 列表<br></code></pre></td></tr></table></figure>
-
-<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta">&gt;</span> <span class="javascript">这是一段引用数据</span><br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>这是一段引用数据</p>
-</blockquote>
-<h3 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">***</span><br><span class="hljs-section">---</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="超链接-图片"><a href="#超链接-图片" class="headerlink" title="超链接/图片"></a>超链接/图片</h3><p><code>[BG 超链接](/img/default.jpg)</code><br><a href="/img/1.jpg">BG 超链接</a></p>
-<p><code>![BG图片](/img/default.jpg)</code><br><img src="/img/1.jpg" srcset="/img/loading.gif" lazyload alt="BG图片"></p>
-<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">|<span class="hljs-string"> 项目        </span>|<span class="hljs-string"> 价格    </span>|<span class="hljs-string">  数量   </span>|<br>|<span class="hljs-string"> --------    </span>|<span class="hljs-string"> -----: </span>|<span class="hljs-string"> :----:  </span>|<br>|<span class="hljs-string"> 掉闹        </span>|<span class="hljs-string"> \$1600  </span>|<span class="hljs-string">   5    </span>|<br>|<span class="hljs-string"> 手机        </span>|<span class="hljs-string">   \$12  </span>|<span class="hljs-string">   12   </span>|<br>|<span class="hljs-string"> 鼠标        </span>|<span class="hljs-string">    \$1  </span>|<span class="hljs-string">   34   </span>|<br><br>: 是对齐方向<br></code></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th align="right">价格</th>
-<th align="center">数量</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>掉闹</td>
-<td align="right">$1600</td>
-<td align="center">5</td>
-</tr>
-<tr>
-<td>手机</td>
-<td align="right">$12</td>
-<td align="center">12</td>
-</tr>
-<tr>
-<td>鼠标</td>
-<td align="right">$1</td>
-<td align="center">34</td>
-</tr>
-</tbody></table>
+<h3 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h3><p>连续高频触发事件时，动作会被定期执行，规定时间内，动作只执行一次，响应平滑。 类似于，打游戏时的普攻，无论我们点击再快，受到游戏数据影响，都只会规定的速度进行攻击</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs typescript"> * <span class="hljs-meta">@desc</span> 函数节流<br> * <span class="hljs-meta">@param</span> func (<span class="hljs-function"><span class="hljs-keyword">function</span>) 函数</span><br><span class="hljs-function"> * @<span class="hljs-title">param</span> <span class="hljs-title">wait</span> (<span class="hljs-params"><span class="hljs-built_in">number</span></span>) 延迟执行毫秒数</span><br><span class="hljs-function"> */</span><br><span class="hljs-function"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">throttle</span>(<span class="hljs-params">func, wait</span>) </span>&#123;</span><br><span class="hljs-function">    <span class="hljs-title">var</span> <span class="hljs-title">timeout</span></span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>        <span class="hljs-keyword">var</span> context = <span class="hljs-built_in">this</span>;<br>        <span class="hljs-keyword">var</span> args = <span class="hljs-built_in">arguments</span>;<br>        <span class="hljs-keyword">if</span> (!timeout) &#123;<br>            timeout = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>                timeout = <span class="hljs-literal">null</span>;<br>                func.apply(context, args)<br>            &#125;, wait)<br>        &#125;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
@@ -278,7 +243,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/MD/">MD</a>
+                      <a class="hover-with-bg" href="/categories/JavaScript/">JavaScript</a>
                     
                   </div>
                 
@@ -286,7 +251,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E9%85%8D%E7%BD%AE/">配置</a>
+                      <a class="hover-with-bg" href="/tags/%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0/">工具函数</a>
                     
                   </div>
                 
@@ -303,9 +268,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/06/26/06-26%E9%98%B2%E6%8A%96%E8%8A%82%E6%B5%81/">
+                      <a href="/2021/06/28/12-07%E8%AE%A4%E8%AF%86node/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">防抖/节流</span>
+                        <span class="hidden-mobile">模板</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -313,8 +278,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2020/12/17/08-17%E5%87%BD%E6%95%B0/">
-                        <span class="hidden-mobile">函数</span>
+                      <a href="/2021/06/25/2021-06/06-25%E9%A1%B6/">
+                        <span class="hidden-mobile">顶</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
