@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>Vue自定义指令学习总结 - 不少头发的程序猿</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Biao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                档案
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/banner4.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Vue自定义指令学习总结">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-07-24 21:40" pubdate>
+        July 24, 2021 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Vue自定义指令学习总结</h1>
+            
+            <div class="markdown-body">
+              <h2 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h2><p>封装常规业务的自定义指令，理解自定义指令各钩子函数意义。<a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide/custom-directive.html">vue 官网-自定义指令</a></p>
+<h2 id="主要"><a href="#主要" class="headerlink" title="主要"></a>主要</h2><ul>
+<li>  <code>bind</code>: 只调用一次，指令第一次绑定到元素时调用，可以定义一个在绑定时执行一次的初始化动作。</li>
+<li>  <code>inserted</code>: 被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于 document 中)。</li>
+<li>  <code>update</code>: 被绑定元素所在的模板更新时调用，而不论绑定值是否变化。通过比较更新前后的绑定值。</li>
+<li>  <code>componentUpdated</code>: 被绑定元素所在模板完成一次更新周期时调用。</li>
+<li>  <code>unbind</code>: 只调用一次， 指令与元素解绑时调用。</li>
+</ul>
+<h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><h3 id="v-copy"><a href="#v-copy" class="headerlink" title="v-copy"></a>v-copy</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> copy = &#123;<br> <span class="hljs-function"><span class="hljs-title">bind</span>(<span class="hljs-params">el, &#123; value &#125;</span>)</span> &#123;<br>   el.$value = value<br>   el.handler = <span class="hljs-function">() =&gt;</span> &#123;<br>     <span class="hljs-keyword">if</span> (!el.$value) &#123;<br>       <span class="hljs-comment">// 值为空的时候，给出提示。可根据项目UI仔细设计</span><br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;无复制内容&#x27;</span>)<br>       <span class="hljs-keyword">return</span><br>     &#125;<br>     <span class="hljs-comment">// 动态创建 textarea 标签</span><br>     <span class="hljs-keyword">const</span> textarea = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">&#x27;textarea&#x27;</span>)<br>     <span class="hljs-comment">// 将该 textarea 设为 readonly 防止 iOS 下自动唤起键盘，同时将 textarea 移出可视区域</span><br>     textarea.readOnly =<span class="hljs-string">&#x27;readonly&#x27;</span><br>     textarea.style.position =<span class="hljs-string">&#x27;absolute&#x27;</span><br>     textarea.style.left =<span class="hljs-string">&#x27;-9999px&#x27;</span><br>     <span class="hljs-comment">// 将要 copy 的值赋给 textarea 标签的 value 属性</span><br>     textarea.value = el.$value<br>     <span class="hljs-comment">// 将 textarea 插入到 body 中</span><br>     <span class="hljs-built_in">document</span>.body.appendChild(textarea)<br>     <span class="hljs-comment">// 选中值并复制</span><br>     textarea.select()<br>     <span class="hljs-keyword">const</span> result = <span class="hljs-built_in">document</span>.execCommand(<span class="hljs-string">&#x27;Copy&#x27;</span>)<br>     <span class="hljs-keyword">if</span> (result) &#123;<br>       <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;复制成功&#x27;</span>)<span class="hljs-comment">// 可根据项目UI仔细设计</span><br>     &#125;<br>     <span class="hljs-built_in">document</span>.body.removeChild(textarea)<br>   &#125;<br>   <span class="hljs-comment">// 绑定点击事件，就是所谓的一键 copy 啦</span><br>   el.addEventListener(<span class="hljs-string">&#x27;click&#x27;</span>, el.handler)<br> &#125;,<br> <span class="hljs-comment">// 当传进来的值更新的时候触发</span><br> <span class="hljs-function"><span class="hljs-title">componentUpdated</span>(<span class="hljs-params">el, &#123; value &#125;</span>)</span> &#123;<br>   el.$value = value<br> &#125;,<br> <span class="hljs-comment">// 指令与元素解绑的时候，移除事件绑定</span><br> <span class="hljs-function"><span class="hljs-title">unbind</span>(<span class="hljs-params">el</span>)</span> &#123;<br>   el.removeEventListener(<span class="hljs-string">&#x27;click&#x27;</span>, el.handler)<br> &#125;,<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> copy<br><br><span class="hljs-comment">// 使用方式</span><br>&lt;template&gt;<br> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">v-copy</span>=<span class="hljs-string">&quot;copyText&quot;</span>&gt;</span>复制<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br>&lt;/template&gt;<br><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="javascript"><span class="xml">   <span class="hljs-function"><span class="hljs-title">data</span>(<span class="hljs-params"></span>)</span> &#123;</span></span><br><span class="javascript"><span class="xml">     <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="javascript"><span class="xml">       <span class="hljs-attr">copyText</span>:<span class="hljs-string">&#x27;a copy directives&#x27;</span>,</span></span><br><span class="javascript"><span class="xml">     &#125;</span></span><br><span class="javascript"><span class="xml">   &#125;,</span></span><br><span class="javascript"><span class="xml"> &#125; </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="v-int（正整数）-v-Float（两位小数）"><a href="#v-int（正整数）-v-Float（两位小数）" class="headerlink" title="v-int（正整数） v-Float（两位小数）"></a>v-int（正整数） v-Float（两位小数）</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br>// 针对 <span class="hljs-keyword">input</span>做的限制，只能输入正整数<br>Vue.directive(<span class="hljs-string">&#x27;Int&#x27;</span>, &#123;<br>    bind: <span class="hljs-keyword">function</span>(el, binding, vnode) &#123;<br>        // 针对 el-<span class="hljs-keyword">input</span>做的限制，只能输入正整数<br>        // <span class="hljs-keyword">if</span> (binding.expression == &quot;el&quot;) &#123;<br>        //   input = el.getElementsByTagName(<span class="hljs-string">&#x27;input&#x27;</span>)[<span class="hljs-number">0</span>]<br>        // &#125; <span class="hljs-keyword">else</span> &#123;<br>        //   input = el<br>        // &#125;<br>        const input = el.getElementsByTagName(<span class="hljs-string">&#x27;input&#x27;</span>)[<span class="hljs-number">0</span>]<br>        <span class="hljs-keyword">input</span>.onkeyup = <span class="hljs-keyword">function</span>(e) &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.length === <span class="hljs-number">1</span>) &#123;<br>                <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/[^<span class="hljs-number">0</span><span class="hljs-number">-9</span>]/g, <span class="hljs-string">&#x27;&#x27;</span>)<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/[^\d]/g, <span class="hljs-string">&#x27;&#x27;</span>)<br>                <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/\b(<span class="hljs-number">0</span>+)/gi, &quot;&quot;)<br>            &#125;<br>            <span class="hljs-keyword">trigger</span>(<span class="hljs-keyword">input</span>, <span class="hljs-string">&#x27;input&#x27;</span>)<br>        &#125;<br>        <span class="hljs-keyword">input</span>.onblur = <span class="hljs-keyword">function</span>(e) &#123;<br>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.length === <span class="hljs-number">1</span>) &#123;<br>                <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/[^<span class="hljs-number">0</span><span class="hljs-number">-9</span>]/g, <span class="hljs-string">&#x27;&#x27;</span>)<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/[^\d]/g, <span class="hljs-string">&#x27;&#x27;</span>)<br>                <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/\b(<span class="hljs-number">0</span>+)/gi, &quot;&quot;)<br>            &#125;<br>            <span class="hljs-keyword">trigger</span>(<span class="hljs-keyword">input</span>, <span class="hljs-string">&#x27;input&#x27;</span>)<br>        &#125;<br>    &#125;<br>&#125;)<br><br>// 针对 <span class="hljs-keyword">input</span>做的限制，能输入<span class="hljs-number">2</span>位小数<br>Vue.directive(<span class="hljs-string">&#x27;Float&#x27;</span>, &#123;<br>    bind: <span class="hljs-keyword">function</span>(el, binding, vnode) &#123;<br>        // let input = undefined<br>        // 针对 el-<span class="hljs-keyword">input</span>做的限制，只能输入正整数<br>        // <span class="hljs-keyword">if</span> (binding.expression == &quot;el&quot;) &#123;<br>        //   input = el.getElementsByTagName(<span class="hljs-string">&#x27;input&#x27;</span>)[<span class="hljs-number">0</span>]<br>        // &#125; <span class="hljs-keyword">else</span> &#123;<br>        //   input = el<br>        // &#125;<br>        const input = el.getElementsByTagName(<span class="hljs-string">&#x27;input&#x27;</span>)[<span class="hljs-number">0</span>]<br>        <span class="hljs-keyword">input</span>.onkeyup = <span class="hljs-keyword">function</span>(e) &#123;<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/[^\d.]/g, <span class="hljs-string">&#x27;&#x27;</span>);<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/\.&#123;<span class="hljs-number">2</span>,&#125;/g, <span class="hljs-string">&#x27;.&#x27;</span>);<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/^\./g, <span class="hljs-string">&#x27;0.&#x27;</span>);<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/^\d*\.\d*\./g, <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.substring(<span class="hljs-number">0</span>, <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.length - <span class="hljs-number">1</span>));<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/^<span class="hljs-number">0</span>[^\.]+/g, <span class="hljs-string">&#x27;0&#x27;</span>)<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/^(\d+)\.(\d\d).*$/, <span class="hljs-string">&#x27;$1.$2&#x27;</span>)<br>            <span class="hljs-keyword">trigger</span>(<span class="hljs-keyword">input</span>, <span class="hljs-string">&#x27;input&#x27;</span>)<br>        &#125;<br>        <span class="hljs-keyword">input</span>.onblur = <span class="hljs-keyword">function</span>(e) &#123;<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/[^\d.]/g, <span class="hljs-string">&#x27;&#x27;</span>);<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/\.&#123;<span class="hljs-number">2</span>,&#125;/g, <span class="hljs-string">&#x27;.&#x27;</span>);<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/^\./g, <span class="hljs-string">&#x27;0.&#x27;</span>);<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/^\d*\.\d*\./g, <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.substring(<span class="hljs-number">0</span>, <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.length - <span class="hljs-number">1</span>));<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/^<span class="hljs-number">0</span>[^\.]+/g, <span class="hljs-string">&#x27;0&#x27;</span>)<br>            <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span> = <span class="hljs-keyword">input</span>.<span class="hljs-keyword">value</span>.replace(/^(\d+)\.(\d\d).*$/, <span class="hljs-string">&#x27;$1.$2&#x27;</span>)<br>            <span class="hljs-keyword">trigger</span>(<span class="hljs-keyword">input</span>, <span class="hljs-string">&#x27;input&#x27;</span>)<br>        &#125;<br>    &#125;<br>&#125;)<br>const <span class="hljs-keyword">trigger</span> = (el, <span class="hljs-keyword">type</span>) =&gt; &#123;<br>    const e = document.createEvent(<span class="hljs-string">&#x27;HTMLEvents&#x27;</span>)<br>    e.initEvent(<span class="hljs-keyword">type</span>, <span class="hljs-keyword">true</span>, <span class="hljs-keyword">true</span>)<br>    el.dispatchEvent(e)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="v-debounce"><a href="#v-debounce" class="headerlink" title="v-debounce"></a>v-debounce</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 防止按钮在短时间内被多次点击，使用防抖函数限制规定时间内只能点击一次。</span><br><span class="hljs-keyword">const</span> debounce = &#123;<br>  <span class="hljs-attr">inserted</span>:<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">el, binding</span>) </span>&#123;<br>    <span class="hljs-keyword">let</span> timer<br>    el.addEventListener(<span class="hljs-string">&#x27;keyup&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-keyword">if</span> (timer) &#123;<br>        <span class="hljs-built_in">clearTimeout</span>(timer)<br>      &#125;<br>      timer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        binding.value()<br>      &#125;, <span class="hljs-number">1000</span>)<br>    &#125;)<br>  &#125;,<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> debounce<br></code></pre></td></tr></table></figure>
+
+<h3 id="v-emoji"><a href="#v-emoji" class="headerlink" title="v-emoji"></a>v-emoji</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-comment">// 根据正则表达式，设计自定义处理表单输入规则的指令，下面以禁止输入表情和特殊字符为例。</span><br><span class="hljs-keyword">let</span> findEle = <span class="hljs-function">(<span class="hljs-params">parent, <span class="hljs-keyword">type</span></span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> parent.tagName.toLowerCase() === <span class="hljs-keyword">type</span> ? parent : parent.querySelector(<span class="hljs-keyword">type</span>)<br>&#125;<br><br><span class="hljs-keyword">const</span> trigger = <span class="hljs-function">(<span class="hljs-params">el, <span class="hljs-keyword">type</span></span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> e = <span class="hljs-built_in">document</span>.createEvent(<span class="hljs-string">&#x27;HTMLEvents&#x27;</span>)<br>  e.initEvent(<span class="hljs-keyword">type</span>,<span class="hljs-literal">true</span>,<span class="hljs-literal">true</span>)<br>  el.dispatchEvent(e)<br>&#125;<br><br><span class="hljs-keyword">const</span> emoji = &#123;<br>  <span class="hljs-attr">bind</span>:<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">el, binding, vnode</span>) </span>&#123;<br>    <span class="hljs-comment">// 正则规则可根据需求自定义</span><br>    <span class="hljs-keyword">var</span> regRule = <span class="hljs-regexp">/[^u4E00-u9FA5|d|a-zA-Z|rns,.?!，。？！…—&amp;$=()-+/*&#123;&#125;[]]|s/g</span><br>    <span class="hljs-keyword">let</span> $inp = findEle(el,<span class="hljs-string">&#x27;input&#x27;</span>)<br>    el.$inp = $inp<br>    $inp.handle =<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>      <span class="hljs-keyword">let</span> val = $inp.value<br>      $inp.value = val.replace(regRule,<span class="hljs-string">&#x27;&#x27;</span>)<br><br>      trigger($inp,<span class="hljs-string">&#x27;input&#x27;</span>)<br>    &#125;<br>    $inp.addEventListener(<span class="hljs-string">&#x27;keyup&#x27;</span>, $inp.handle)<br>  &#125;,<br>  <span class="hljs-attr">unbind</span>:<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">el</span>) </span>&#123;<br>    el.$inp.removeEventListener(<span class="hljs-string">&#x27;keyup&#x27;</span>, el.$inp.handle)<br>  &#125;,<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> emoji<br><br><span class="hljs-comment">//使用</span><br>&lt;template&gt;<br>  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&quot;note&quot;</span> <span class="hljs-attr">v-emoji</span> /&gt;</span></span><br>&lt;/template&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="v-LazyLoad"><a href="#v-LazyLoad" class="headerlink" title="v-LazyLoad"></a>v-LazyLoad</h3><blockquote>
+<p>实现一个图片懒加载指令，只加载浏览器可见区域的图片。</p>
+</blockquote>
+<p>思路：<br>图片懒加载的原理主要是判断当前图片是否到了可视区域这一核心逻辑实现的<br>拿到所有的图片 Dom ，遍历每个图片判断当前图片是否到了可视区范围内<br>如果到了就设置图片的 src 属性，否则显示默认图片</p>
+<blockquote>
+<p>图片懒加载有两种方式可以实现，一是绑定 srcoll 事件进行监听，二是使用 IntersectionObserver 判断图片是否到了可视区域，但是有浏览器兼容性问题。</p>
+</blockquote>
+<p>下面封装一个懒加载指令兼容两种方法，判断浏览器是否支持 IntersectionObserver API，如果支持就使用 IntersectionObserver 实现懒加载，否则则使用 srcoll 事件监听 + 节流的方法实现。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> LazyLoad = &#123;<br>  <span class="hljs-comment">// install方法</span><br>  <span class="hljs-function"><span class="hljs-title">install</span>(<span class="hljs-params">Vue, options</span>)</span> &#123;<br>    <span class="hljs-keyword">const</span> defaultSrc = options.default<br>    Vue.directive(<span class="hljs-string">&#x27;lazy&#x27;</span>, &#123;<br>      <span class="hljs-function"><span class="hljs-title">bind</span>(<span class="hljs-params">el, binding</span>)</span> &#123;<br>        LazyLoad.init(el, binding.value, defaultSrc)<br>      &#125;,<br>      <span class="hljs-function"><span class="hljs-title">inserted</span>(<span class="hljs-params">el</span>)</span> &#123;<br>        <span class="hljs-keyword">if</span> (IntersectionObserver) &#123;<br>          LazyLoad.observe(el)<br>        &#125;<span class="hljs-keyword">else</span> &#123;<br>          LazyLoad.listenerScroll(el)<br>        &#125;<br>      &#125;,<br>    &#125;)<br>  &#125;,<br>  <span class="hljs-comment">// 初始化</span><br>  <span class="hljs-function"><span class="hljs-title">init</span>(<span class="hljs-params">el, val, def</span>)</span> &#123;<br>    el.setAttribute(<span class="hljs-string">&#x27;data-src&#x27;</span>, val)<br>    el.setAttribute(<span class="hljs-string">&#x27;src&#x27;</span>, def)<br>  &#125;,<br>  <span class="hljs-comment">// 利用IntersectionObserver监听el</span><br>  <span class="hljs-function"><span class="hljs-title">observe</span>(<span class="hljs-params">el</span>)</span> &#123;<br>    <span class="hljs-keyword">var</span> io =<span class="hljs-keyword">new</span> IntersectionObserver(<span class="hljs-function">(<span class="hljs-params">entries</span>) =&gt;</span> &#123;<br>      <span class="hljs-keyword">const</span> realSrc = el.dataset.src<br>      <span class="hljs-keyword">if</span> (entries[<span class="hljs-number">0</span>].isIntersecting) &#123;<br>        <span class="hljs-keyword">if</span> (realSrc) &#123;<br>          el.src = realSrc<br>          el.removeAttribute(<span class="hljs-string">&#x27;data-src&#x27;</span>)<br>        &#125;<br>      &#125;<br>    &#125;)<br>    io.observe(el)<br>  &#125;,<br>  <span class="hljs-comment">// 监听scroll事件</span><br>  <span class="hljs-function"><span class="hljs-title">listenerScroll</span>(<span class="hljs-params">el</span>)</span> &#123;<br>    <span class="hljs-keyword">const</span> handler = LazyLoad.throttle(LazyLoad.load, <span class="hljs-number">300</span>)<br>    LazyLoad.load(el)<br>    <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">&#x27;scroll&#x27;</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>      handler(el)<br>    &#125;)<br>  &#125;,<br>  <span class="hljs-comment">// 加载真实图片</span><br>  <span class="hljs-function"><span class="hljs-title">load</span>(<span class="hljs-params">el</span>)</span> &#123;<br>    <span class="hljs-keyword">const</span> windowHeight = <span class="hljs-built_in">document</span>.documentElement.clientHeight<br>    <span class="hljs-keyword">const</span> elTop = el.getBoundingClientRect().top<br>    <span class="hljs-keyword">const</span> elBtm = el.getBoundingClientRect().bottom<br>    <span class="hljs-keyword">const</span> realSrc = el.dataset.src<br>    <span class="hljs-keyword">if</span> (elTop - windowHeight &lt; <span class="hljs-number">0</span> &amp;&amp; elBtm &gt; <span class="hljs-number">0</span>) &#123;<br>      <span class="hljs-keyword">if</span> (realSrc) &#123;<br>        el.src = realSrc<br>        el.removeAttribute(<span class="hljs-string">&#x27;data-src&#x27;</span>)<br>      &#125;<br>    &#125;<br>  &#125;,<br>  <span class="hljs-comment">// 节流</span><br>  <span class="hljs-function"><span class="hljs-title">throttle</span>(<span class="hljs-params">fn, delay</span>)</span> &#123;<br>    <span class="hljs-keyword">let</span> timer<br>    <span class="hljs-keyword">let</span> prevTime<br>    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">...args</span>) </span>&#123;<br>      <span class="hljs-keyword">const</span> currTime = <span class="hljs-built_in">Date</span>.now()<br>      <span class="hljs-keyword">const</span> context =<span class="hljs-built_in">this</span><br>      <span class="hljs-keyword">if</span> (!prevTime) prevTime = currTime<br>      <span class="hljs-built_in">clearTimeout</span>(timer)<br><br>      <span class="hljs-keyword">if</span> (currTime - prevTime &gt; delay) &#123;<br>        prevTime = currTime<br>        fn.apply(context, args)<br>        <span class="hljs-built_in">clearTimeout</span>(timer)<br>        <span class="hljs-keyword">return</span><br>      &#125;<br><br>      timer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;<br>        prevTime = <span class="hljs-built_in">Date</span>.now()<br>        timer =<span class="hljs-literal">null</span><br>        fn.apply(context, args)<br>      &#125;, delay)<br>    &#125;<br>  &#125;,<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> LazyLoad<br><br><span class="hljs-comment">// 使用</span><br>&lt;img v-LazyLoad=<span class="hljs-string">&quot;xxx.jpg&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="批量注册"><a href="#批量注册" class="headerlink" title="批量注册"></a>批量注册</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">import</span> copy <span class="hljs-keyword">from</span><span class="hljs-string">&#x27;./copy&#x27;</span><br><span class="hljs-keyword">import</span> debounce <span class="hljs-keyword">from</span><span class="hljs-string">&#x27;./debounce&#x27;</span><br><span class="hljs-comment">// 自定义指令</span><br><span class="hljs-keyword">const</span> directives = &#123;<br>  copy,<br>  debounce,<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  <span class="hljs-function"><span class="hljs-title">install</span>(<span class="hljs-params">Vue</span>)</span> &#123;<br>    <span class="hljs-built_in">Object</span>.keys(directives).forEach(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> &#123;<br>      Vue.directive(key, directives[key])<br>    &#125;)<br>  &#125;,<br>&#125;<br><br><span class="hljs-comment">//在 main.js 引入并调用</span><br><span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span><span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">import</span> Directives <span class="hljs-keyword">from</span><span class="hljs-string">&#x27;./JS/directives&#x27;</span><br>Vue.use(Directives)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/1.jpg" srcset="/img/loading.gif" lazyload alt="BG图片"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Vue/">Vue</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/vue/">vue</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/07/26/2021-07/07-26Vue%E7%BB%84%E4%BB%B6%E5%93%8D%E5%BA%94%E5%BC%8F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Vue响应数据原理</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/07/22/2021-07/07-22Vue%E6%8C%87%E4%BB%A4%E5%AD%A6%E4%B9%A0/">
+                        <span class="hidden-mobile">Vue指令学习</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
