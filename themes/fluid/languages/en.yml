@@ -1,0 +1,48 @@
+search:
+  title: Search
+  keyword: keyword
+  status:
+    success: v
+    error: x
+
+postTotal: "%d posts in total."
+
+paginator:
+  pre: Previous
+  next: Next
+
+post:
+  toc: TOC
+  pre: Previous
+  next: Next
+
+home:
+  title: 首页
+
+archive:
+  title: 档案
+  subtitle: Archive
+
+tag:
+  title: 标签
+  subtitle: Tag
+
+category:
+  title: 分类
+  subtitle: Category
+
+about:
+  title: 关于我
+  subtitle: About
+
+bout:
+  title: 关于1
+  subtitle: About
+
+page404:
+  title: Page not found
+  subtitle: Oops, Page not found...
+
+links:
+  title: Links
+  subtitle: Links
