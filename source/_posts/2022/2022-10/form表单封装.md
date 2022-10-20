@@ -1,0 +1,364 @@
+---
+title: form表单简单封装
+date: 2022-10-28 20:27:28
+tags: 表单组件封装（初）
+category: Vue
+---
+
+### 初始需求分析
+
+日常开发中特别是做后台管理系统需要开发⼤量类似的表单页⾯，每次的表单页面很长，有相似有不同。重复的逻辑、重复的代码。
+CV 对于后期的维护、新页⾯的开发仍旧需要⼤量的时间去完成重复的⼯作。为了提升开发效率，便于开发学习(摸鱼)，对代码封装进行抽离、整合、优化相对应逻辑
+![表单1](/img/2022/form1.png)
+
+### 实现效果
+
+1. 要能⽣成不同类型的表单元素
+2. 通过简单的配置可以定位或者栅格布局元素
+3. 能⽀持表单提交后的回调函数获取数据
+4. 更易维护核⼼代码编写⽅式【因为任何组件⼯具都不可能⼀次设计完美】
+
+思考：数据结构
+需求有： 表单行数、 colspan 栅格跨度 每项 key 识别(表单校验 prop) 名字(label) 默认值(value) 类型（type）额外原生属性配置
+
+```
+const form = Object.freeze({
+	 title: '注册⽤户',
+	 items: [
+		 [ { label:'⽤户名',type: 'input', key: 'username', col: 2,value:12 ],
+		 [ { label:'性别',type: 'select', key: 'gender', option { label: '男', value: 1 }, { label: '⼥', value: 0 } ] }, ]
+	 ]
+});
+
+Object.freeze是可以冻结对象，对于不需要改变的对象使⽤，可以提升性能 item的每一项是表的每一行
+```
+
+#### 使用组件(这边使用的是 vue2 + element 用 jsx 写法)
+
+```
+  <Gform :conf="form.items" :rules="form.rules" @submit="submit" > </Gform>
+```
+
+#### form 组件
+
+```
+<script>
+// import Rows from './rows.vue';
+import columsItem from './columsItem.vue';
+export default {
+    name: 'Gorm',
+    componensts: {
+        // Rows,
+        columsItem,
+    },
+    props: {
+        conf: {
+            type: Array,
+            required: true,
+        },
+        rules: {
+            type: Object,
+            default: () => {},
+        },
+    },
+    data() {
+        return {
+            form: {},
+        };
+    },
+    computed: {
+        items() {
+            return this.conf;
+        },
+        rulesForm() {
+            return this.rules;
+        },
+    },
+    watch: {},
+    created() {
+        if (this.items) {
+            this.reaciveData(this.items);
+        }
+        this.rulesHandler(this.rulesForm);
+    },
+    mounted() {},
+    methods: {
+        /** 获取提交数据函数 */
+        submit() {
+            let { submit } = this.$listeners;
+            this.validate(submit);
+        },
+        /** 请空值校验 */
+        reset() {
+            this.$refs.form.resetFields();
+        },
+        /** 获取form值 */
+        getData() {
+            return this.deepClone(this.form);
+        },
+        /** 深拷贝 */
+        deepClone(data) {
+            return JSON.parse(JSON.stringify(data));
+        },
+        /** 校验 */
+        validate(fn) {
+            // 1. 先验证， 验证通过 调用this.getData()作为参数给fn
+            // 2. 验证失败 返回false或者null给外部
+            this.$refs.form.validate((valid) => {
+                if (valid) {
+                    fn(this.getData());
+                } else {
+                    fn(false);
+                }
+            });
+        },
+        /** 列 */
+        renderColums(rowArr) {
+            return rowArr.map((item) => {
+                return (
+                    <el-col
+                        xl={item.colspan}
+                        lg={item.colspan}
+                        md={12}
+                        sm={24}
+                        xs={24}
+                    >
+                        <el-form-item label={item.label} prop={item.key}>
+                            <columsItem
+                                v-model={this.form[item.key]}
+                                columsData={item}
+                            />
+                        </el-form-item>
+                    </el-col>
+                );
+            });
+        },
+        /** 行 */
+        rederRows(rows) {
+            return rows.map((rowArr) => {
+                return <el-row> {this.renderColums(rowArr)} </el-row>;
+            });
+        },
+        /** 设置响应值 */
+        reaciveData(data) {
+            data.forEach((row) => {
+                row.forEach((item) => {
+                    this.$set(this.form, item.key, item.value || '');
+                });
+            });
+        },
+        /** 改变自定义验证器的this指向 */
+        rulesHandler(rules) {
+            for (let key in rules) {
+                let valArr = rules[key];
+                valArr.forEach((item) => {
+                    if (item.validator) {
+                        item.validator = item.validator.bind(this);
+                    }
+                });
+            }
+        },
+    },
+    render() {
+        return (
+            <div class="form-box">
+                <el-form
+                    ref="form"
+                    rules={this.rulesForm}
+                    attrs={{ model: this.form }}
+                    label-width="80px"
+                >
+                    {this.rederRows(this.items)}
+                    <div class="btns clear-fix">
+                        {/* 没有默认插槽时 DOM */}
+                        {this.$slots.default ? (
+                            this.$slots.default
+                        ) : (
+                            <div>
+                                <el-button
+                                    type="success"
+                                    onClick={() => this.submit()}
+                                >
+                                    提交
+                                </el-button>
+                                <el-button onClick={() => this.reset()}>
+                                    重置
+                                </el-button>
+                            </div>
+                        )}
+                        {/* 仅仅填DOM,给父传递参数this.$scopedSlots.default(data) */}
+                    </div>
+                </el-form>
+            </div>
+        );
+    },
+};
+</script>
+<style scoped lang="scss"></style>
+```
+
+1. 需要将外部传递初始数据进行数据劫持 使用 [Vue.set](https://v2.cn.vuejs.org/v2/api/#Vue-set)
+2. 将传递校验属性 this 指向改变
+3. 注意一些值的改变影响做深拷贝 以免一些不必要的情况出现
+
+#### 基础组件
+
+```
+<script>
+export default {
+    name: 'columsItem',
+    components: {},
+    props: {
+        columsData: {
+            type: Object,
+            required: true,
+        },
+        value: {
+            required: true,
+        },
+    },
+    model: {
+        prop: 'value',
+        event: 'changeVal',
+    },
+    data() {
+        return {
+            val: '',
+        };
+    },
+    computed: {
+        span() {
+            return this.columsData;
+        },
+    },
+    watch: {
+        val: {
+            deep: true,
+            handler() {
+                this.changeVal();
+            },
+        },
+    },
+    created() {},
+    mounted() {
+        // console.log(this.value, 11, 'columsData', this.columsData);
+        this.val = this.deepClone(this.value);
+    },
+    methods: {
+        /** 深拷贝 */
+        deepClone(data) {
+            return JSON.parse(JSON.stringify(data));
+        },
+        /** 双向绑定事件 */
+        changeVal() {
+            // 反馈事件名称与model 中事件名称一致
+            this.$emit('changeVal', this.val);
+        },
+        /** 渲染当前表单元素 */
+        renderItem(item) {
+            switch (item.type) {
+                case 'input':
+                case 'password':
+                case 'textarea':
+                    return (
+                        <el-input
+                            type={item.type}
+                            v-model={this.val}
+                            attrs={item.attrs}
+                        ></el-input>
+                    );
+                case 'radio':
+                    return (
+                        <el-radio-group v-model={this.val}>
+                            {item.options.map((opt, i) => {
+                                return (
+                                    <el-radio key={i} label={opt.label}>
+                                        {opt.text}
+                                    </el-radio>
+                                );
+                            })}
+                        </el-radio-group>
+                    );
+
+                case 'select':
+                    return (
+                        <el-select attrs={item.attrs} v-model={this.val}>
+                            {item.options.map((opt) => {
+                                return (
+                                    <el-option
+                                        key={opt.value}
+                                        label={opt.label}
+                                        value={opt.value}
+                                    ></el-option>
+                                );
+                            })}
+                        </el-select>
+                    );
+                case 'datetime':
+                    return (
+                        <el-date-picker
+                            attrs={item.attrs}
+                            v-model={this.val}
+                            value-format={item.valueFormat}
+                            type="date"
+                        ></el-date-picker>
+                    );
+            }
+        },
+    },
+    render() {
+        return <div>{this.renderItem(this.span)}</div>;
+    },
+};
+</script>
+<style scoped lang="scss"></style>
+
+```
+
+1. renderItem 做种 type 渲染 单项数据在这里维护
+2. attrs 调用原声属性 在这里做扩展口子
+3. 做组件的 model 双向数据绑定写法
+
+### 示例代码
+
+![表单1](/img/2022/form3.png)
+
+```
+export default {
+    items: Object.freeze([
+        [
+            {
+                type: 'input',
+                label: '用户名',
+                colspan: 12,
+                value: '2222',
+                key: 'username',
+                show: true,
+            },
+        ],
+        [{ type: 'password', label: '密码', colspan: 12, key: 'password', attrs: { placeholder:'请输入密码',} }],
+        [{
+                type: 'password',
+                label: '确认密码',
+                colspan: 12,
+                key: 'confirmPwd',
+         }],
+        [{
+                colspan: 8,
+                type: 'radio',
+                label: '权限分配',
+                key: 'permission',
+                value: '2',
+                options: Dic.RY_TY,
+        }],
+    ]),
+    rules: {
+        username: [{ required: true, message: '输入用户名' }],
+        password: [{ required: true, message: '输入密码' }],
+        confirmPwd: [{ validator: validatePass2, trigger: 'blur' }],
+        permission: [{ required: true }],
+    },
+};
+```
+
+![BG图片](/img/1.jpg)
