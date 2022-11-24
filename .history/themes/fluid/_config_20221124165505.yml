@@ -841,7 +841,7 @@ about:
   subtitle: 那个追风男孩儿已经疯一样的男人了～
   avatar: /img/user.png
   name: "Ginger"
-  intro: "爱奇艺、腾讯视频、B站、知乎等知名网站续费会员，淘宝、京东、拼多多等商城的多年忠实用户。人之所以能，是相信能！"
+  intro: "爱奇艺、腾讯视频、百度、知乎等知名网站续费会员，淘宝、京东、拼多多等商城的多年忠实用户。人之所以能，是相信能！"
   # 更多图标可从 https://hexo.fluid-dev.com/docs/icon/ 查找，`class` 代表图标的 css class，添加 `qrcode` 后，图标不再是链接而是悬浮二维码
   # More icons can be found from https://hexo.fluid-dev.com/docs/en/icon/  `class` is the css class of the icon. If adding `qrcode`, The icon is no longer a link, but a hovering QR code
   icons:
