@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>vue router axios 用户的三级权限 - 不少头发的程序猿</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Biao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                档案
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/banner4.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="vue router axios 用户的三级权限">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-07-10 20:18" pubdate>
+        July 10, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      610 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      8
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">vue router axios 用户的三级权限</h1>
+            
+            <div class="markdown-body">
+              <h3 id="Vue-项目中的权限识别"><a href="#Vue-项目中的权限识别" class="headerlink" title="Vue 项目中的权限识别"></a>Vue 项目中的权限识别</h3><p>在很多后台管理系统中，常常需要很多的权限设置 以下以几点介绍常规的权限设置</p>
+<ol>
+<li>登陆权限</li>
+<li>页面级权限</li>
+<li>功能按钮级权限</li>
+</ol>
+<h4 id="登陆用户权限"><a href="#登陆用户权限" class="headerlink" title="登陆用户权限"></a>登陆用户权限</h4><p>需要将用户的账户密码提交后台，换取 token 值 放入 vuex 中进行状态储存 进行项目内的数据请求获取/提交 (与后台交互省略) 一般在请求中 授权信息没有登陆获取不到内容</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-comment">// 在axios 业务封装中 将token 添加至请求中</span><br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">getToken</span>())&#123;<br> httpConfig.headers[&#x27;access-<span class="hljs-keyword">token</span>&#x27;] = <span class="hljs-keyword">getToken</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/2022_qx1.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="路由页面级权限"><a href="#路由页面级权限" class="headerlink" title="路由页面级权限"></a>路由页面级权限</h4><pre><code>做路由的渲染的一般两种方式
+1. 本地静态路由加载方式
+2. 有后台返回路由表数据渲染，使用addRoutes/addRoute加载 (返回的路由表一般在sso配置返回)
+</code></pre>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">//路由钩子</span><br>router.before<span class="hljs-constructor">Each(<span class="hljs-params">async</span> (<span class="hljs-params">to</span>, <span class="hljs-params">from</span>, <span class="hljs-params">next</span>)</span> =&gt; &#123;<br>    const token = get<span class="hljs-constructor">Token()</span>;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">to</span>?.query?.token) &#123;<br>        set<span class="hljs-constructor">CasToken(<span class="hljs-params">to</span>?.<span class="hljs-params">query</span>?.<span class="hljs-params">token</span>)</span>;<br>    &#125;<br>    <span class="hljs-keyword">let</span> casToken = get<span class="hljs-constructor">CasToken()</span><span class="hljs-operator"> || </span><span class="hljs-keyword">to</span>?.query?.token<span class="hljs-operator"> || </span>&#x27;&#x27;;<br>    <span class="hljs-keyword">if</span> (token) &#123;<br>        <span class="hljs-keyword">if</span> (store.getters<span class="hljs-literal">[&#x27;<span class="hljs-identifier">common</span><span class="hljs-operator">/</span><span class="hljs-identifier">userMenus</span>&#x27;]</span>.length<span class="hljs-operator"> === </span><span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">if</span> (casToken) &#123;<br>                await get<span class="hljs-constructor">UserInfo(&#123; <span class="hljs-params">token</span>: <span class="hljs-params">casToken</span> &#125;, <span class="hljs-params">next</span>)</span>;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                remove<span class="hljs-constructor">Token()</span>;<br>                window.location.href = LOGINURL;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            next<span class="hljs-literal">()</span>;<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">if</span> (casToken) &#123;<br>            await get<span class="hljs-constructor">UserInfo(&#123; <span class="hljs-params">token</span>: <span class="hljs-params">casToken</span> &#125;, <span class="hljs-params">next</span>)</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            remove<span class="hljs-constructor">Token()</span>;<br>            window.location.href = LOGINURL;<br>        &#125;<br>    &#125;<br>&#125;);<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 获取用户信息</span><br><span class="hljs-comment"> * @param &#123;*&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">function</span> get<span class="hljs-constructor">UserInfo(<span class="hljs-params">params</span>, <span class="hljs-params">next</span>)</span> &#123;<br>    store<br>        .dispatch(&#x27;common/getUserInfo&#x27;, params)<br>        .<span class="hljs-keyword">then</span>(async<span class="hljs-function"> (<span class="hljs-params">res</span>) =&gt;</span> &#123;<br>            store.commit(&#x27;common/SETTREEMENUS&#x27;, res.user.menus<span class="hljs-literal">[<span class="hljs-number">0</span>]</span>.children);<br>            const accessRoutes = await store.dispatch(<br>                &#x27;permission/generateRoutes&#x27;,<br>                res.user.permissions<br>            );<br>            reset<span class="hljs-constructor">Router()</span>;<br>            router.add<span class="hljs-constructor">Routes(<span class="hljs-params">accessRoutes</span>)</span>;<br>            next<span class="hljs-literal">()</span>;<br>        &#125;)<br>        .catch((errItem) =&gt; &#123;<br>            console.log(&#x27;getUserInfo-error: &#x27;, errItem);<br>        &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="功能按钮级权限"><a href="#功能按钮级权限" class="headerlink" title="功能按钮级权限"></a>功能按钮级权限</h4><p>我们可以使用 v-if 来实现，不过这样做，每个页面都要获取一次权限信息，代码往往很冗余。项目中我们一般通过 封装自定义指令，来实现按钮级的权限控制。</p>
+<h6 id="获取监测权限的数据处理"><a href="#获取监测权限的数据处理" class="headerlink" title="获取监测权限的数据处理"></a>获取监测权限的数据处理</h6><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">// 自定义指令函数</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Vue</span>.</span></span>directive(&#x27;has&#x27;, &#123;<br>    inserted: <span class="hljs-keyword">function</span>(el, binding) &#123;<br>        <span class="hljs-keyword">if</span> (permission<span class="hljs-constructor">Judge(<span class="hljs-params">binding</span>.<span class="hljs-params">value</span>)</span>) &#123;<br>            el.parentNode.remove<span class="hljs-constructor">Child(<span class="hljs-params">el</span>)</span>;<br>        &#125;<br>	&#125;<br>		<span class="hljs-keyword">function</span> permission<span class="hljs-constructor">Judge(<span class="hljs-params">value</span>)</span> &#123;<br>		        <span class="hljs-comment">// 此处代表vuex中储存的按钮菜单数据</span><br>		        <span class="hljs-keyword">let</span> <span class="hljs-built_in">list</span> = store.getters<span class="hljs-literal">[&#x27;<span class="hljs-identifier">common</span><span class="hljs-operator">/</span><span class="hljs-identifier">permissionList</span>&#x27;]</span>;<br>		        <span class="hljs-keyword">let</span> flag = <span class="hljs-literal">true</span>;<br>		        <span class="hljs-built_in">list</span>.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each((<span class="hljs-params">item</span>)</span> =&gt; &#123;<br>		            <span class="hljs-keyword">if</span> (item<span class="hljs-operator"> == </span>value) &#123;<br>		                flag = <span class="hljs-literal">false</span>;<br>		            &#125;<br>		        &#125;);<br>		        return flag;<br>		    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h6 id="封装-放到-单独的自定义指令文件夹中-在-main-文件中引入"><a href="#封装-放到-单独的自定义指令文件夹中-在-main-文件中引入" class="headerlink" title="封装 放到 单独的自定义指令文件夹中 在 main 文件中引入"></a>封装 放到 单独的自定义指令文件夹中 在 main 文件中引入</h6><p>####页面使用</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">&lt;ez-button <span class="hljs-attribute">size</span>=<span class="hljs-string">&#x27;mini&#x27;</span>  plain <span class="hljs-attribute">type</span>=<span class="hljs-string">&quot;primary&quot;</span> <span class="hljs-attribute">v-has</span>=<span class="hljs-string">&quot;&#x27;school:add&#x27;&quot;</span>  @<span class="hljs-attribute">click</span>=<span class="hljs-string">&quot;onSubmit(&#x27;3&#x27;)&quot;</span>&gt;新增&lt;/ez-button&gt;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/1.jpg" srcset="/img/loading.gif" lazyload alt="BG图片"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Vue/">Vue</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/vue/">vue</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/10/2022/2022-08/08-10form%E8%A1%A8%E5%8D%95%E5%B0%81%E8%A3%85/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">form表单简单封装</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/25/2022/2022-06/06-25webpack%E9%85%8D%E7%BD%AE%E5%AD%A6%E4%B9%A01/">
+                        <span class="hidden-mobile">webpack配置学习</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

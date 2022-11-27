@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+  <title>form表单简单封装 - 不少头发的程序猿</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Biao</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                档案
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/banner4.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="form表单简单封装">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-08-10 21:17" pubdate>
+        August 10, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">form表单简单封装</h1>
+            
+            <div class="markdown-body">
+              <h3 id="初始需求分析"><a href="#初始需求分析" class="headerlink" title="初始需求分析"></a>初始需求分析</h3><p>日常开发中特别是做后台管理系统需要开发⼤量类似的表单页⾯，每次的表单页面很长，有相似有不同。重复的逻辑、重复的代码。<br>CV 对于后期的维护、新页⾯的开发仍旧需要⼤量的时间去完成重复的⼯作。为了提升开发效率，便于开发学习(摸鱼)，对代码封装进行抽离、整合、优化相对应逻辑<br><img src="/img/2022/form1.png" srcset="/img/loading.gif" lazyload alt="表单1"></p>
+<h3 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a>实现效果</h3><ol>
+<li>要能⽣成不同类型的表单元素</li>
+<li>通过简单的配置可以定位或者栅格布局元素</li>
+<li>能⽀持表单提交后的回调函数获取数据</li>
+<li>更易维护核⼼代码编写⽅式【因为任何组件⼯具都不可能⼀次设计完美】</li>
+</ol>
+<p>思考：数据结构<br>需求有： 表单行数、 colspan 栅格跨度 每项 key 识别(表单校验 prop) 名字(label) 默认值(value) 类型（type）额外原生属性配置</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">const form = <span class="hljs-keyword">Object</span>.<span class="hljs-keyword">freeze</span>(&#123;<br>	 title: <span class="hljs-string">&#x27;注册⽤户&#x27;</span>,<br>	 items: [<br>		 [ &#123; label:<span class="hljs-string">&#x27;⽤户名&#x27;</span>,<span class="hljs-keyword">type</span>: <span class="hljs-string">&#x27;input&#x27;</span>, key: <span class="hljs-string">&#x27;username&#x27;</span>, col: <span class="hljs-number">2</span>,<span class="hljs-keyword">value</span>:<span class="hljs-number">12</span> ],<br>		 [ &#123; label:<span class="hljs-string">&#x27;性别&#x27;</span>,<span class="hljs-keyword">type</span>: <span class="hljs-string">&#x27;select&#x27;</span>, key: <span class="hljs-string">&#x27;gender&#x27;</span>, <span class="hljs-keyword">option</span> &#123; label: <span class="hljs-string">&#x27;男&#x27;</span>, <span class="hljs-keyword">value</span>: <span class="hljs-number">1</span> &#125;, &#123; label: <span class="hljs-string">&#x27;⼥&#x27;</span>, <span class="hljs-keyword">value</span>: <span class="hljs-number">0</span> &#125; ] &#125;, ]<br>	 ]<br>&#125;);<br><br><span class="hljs-keyword">Object</span>.<span class="hljs-keyword">freeze</span>是可以冻结对象，对于不需要改变的对象使⽤，可以提升性能 item的每一项是表的每一行<br></code></pre></td></tr></table></figure>
+
+<h4 id="使用组件-这边使用的是-vue2-element-用-jsx-写法"><a href="#使用组件-这边使用的是-vue2-element-用-jsx-写法" class="headerlink" title="使用组件(这边使用的是 vue2 + element 用 jsx 写法)"></a>使用组件(这边使用的是 vue2 + element 用 jsx 写法)</h4><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir">&lt;<span class="hljs-title class_">Gform</span> <span class="hljs-symbol">:conf=<span class="hljs-string">&quot;form.items&quot;</span></span> <span class="hljs-symbol">:rules=<span class="hljs-string">&quot;form.rules&quot;</span></span> <span class="hljs-variable">@submit</span>=<span class="hljs-string">&quot;submit&quot;</span> &gt; &lt;/<span class="hljs-title class_">Gform</span>&gt;<br></code></pre></td></tr></table></figure>
+
+<h4 id="form-组件"><a href="#form-组件" class="headerlink" title="form 组件"></a>form 组件</h4><figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-comment">// import Rows from &#x27;./rows.vue&#x27;;</span></span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">import</span> columsItem <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./columsItem.vue&#x27;</span>;</span></span><br><span class="language-javascript"><span class="language-xml"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Gorm&#x27;</span>,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">componensts</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">// Rows,</span></span></span><br><span class="language-javascript"><span class="language-xml">        columsItem,</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">props</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">conf</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-attr">type</span>: <span class="hljs-title class_">Array</span>,</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-attr">rules</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-attr">type</span>: <span class="hljs-title class_">Object</span>,</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-attr">default</span>: <span class="hljs-function">() =&gt;</span> &#123;&#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">return</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-attr">form</span>: &#123;&#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;;</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">computed</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">items</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">conf</span>;</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">rulesForm</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">rules</span>;</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">watch</span>: &#123;&#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">created</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">reaciveData</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>);</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">rulesHandler</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">rulesForm</span>);</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">mounted</span>(<span class="hljs-params"></span>) &#123;&#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-attr">methods</span>: &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 获取提交数据函数 */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">submit</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">let</span> &#123; submit &#125; = <span class="hljs-variable language_">this</span>.<span class="hljs-property">$listeners</span>;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">validate</span>(submit);</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 请空值校验 */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">reset</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>.<span class="hljs-property">form</span>.<span class="hljs-title function_">resetFields</span>();</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 获取form值 */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">getData</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">deepClone</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">form</span>);</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 深拷贝 */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">deepClone</span>(<span class="hljs-params">data</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">return</span> <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data));</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 校验 */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">validate</span>(<span class="hljs-params">fn</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-comment">// 1. 先验证， 验证通过 调用this.getData()作为参数给fn</span></span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-comment">// 2. 验证失败 返回false或者null给外部</span></span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-variable language_">this</span>.<span class="hljs-property">$refs</span>.<span class="hljs-property">form</span>.<span class="hljs-title function_">validate</span>(<span class="hljs-function">(<span class="hljs-params">valid</span>) =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-keyword">if</span> (valid) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                    <span class="hljs-title function_">fn</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getData</span>());</span></span><br><span class="language-javascript"><span class="language-xml">                &#125; <span class="hljs-keyword">else</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                    <span class="hljs-title function_">fn</span>(<span class="hljs-literal">false</span>);</span></span><br><span class="language-javascript"><span class="language-xml">                &#125;</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 列 */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">renderColums</span>(<span class="hljs-params">rowArr</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">return</span> rowArr.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-keyword">return</span> (</span></span><br><span class="language-javascript"><span class="language-xml">                    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-col</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                        <span class="hljs-attr">xl</span>=<span class="hljs-string">&#123;item.colspan&#125;</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                        <span class="hljs-attr">lg</span>=<span class="hljs-string">&#123;item.colspan&#125;</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                        <span class="hljs-attr">md</span>=<span class="hljs-string">&#123;12&#125;</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                        <span class="hljs-attr">sm</span>=<span class="hljs-string">&#123;24&#125;</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                        <span class="hljs-attr">xs</span>=<span class="hljs-string">&#123;24&#125;</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                    &gt;</span></span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                        <span class="hljs-tag">&lt;<span class="hljs-name">el-form-item</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&#123;item.label&#125;</span> <span class="hljs-attr">prop</span>=<span class="hljs-string">&#123;item.key&#125;</span>&gt;</span></span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                            <span class="hljs-tag">&lt;<span class="hljs-name">columsItem</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#123;this.form[item.key]&#125;</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                <span class="hljs-attr">columsData</span>=<span class="hljs-string">&#123;item&#125;</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                            /&gt;</span></span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                        <span class="hljs-tag">&lt;/<span class="hljs-name">el-form-item</span>&gt;</span></span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                    <span class="hljs-tag">&lt;/<span class="hljs-name">el-col</span>&gt;</span></span></span></span><br><span class="language-javascript"><span class="language-xml">                );</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 行 */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">rederRows</span>(<span class="hljs-params">rows</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">return</span> rows.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">rowArr</span>) =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-row</span>&gt;</span> &#123;this.renderColums(rowArr)&#125; <span class="hljs-tag">&lt;/<span class="hljs-name">el-row</span>&gt;</span></span>;</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 设置响应值 */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">reaciveData</span>(<span class="hljs-params">data</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            data.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">row</span>) =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                row.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                    <span class="hljs-variable language_">this</span>.$set(<span class="hljs-variable language_">this</span>.<span class="hljs-property">form</span>, item.<span class="hljs-property">key</span>, item.<span class="hljs-property">value</span> || <span class="hljs-string">&#x27;&#x27;</span>);</span></span><br><span class="language-javascript"><span class="language-xml">                &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-comment">/** 改变自定义验证器的this指向 */</span></span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-title function_">rulesHandler</span>(<span class="hljs-params">rules</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">in</span> rules) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                <span class="hljs-keyword">let</span> valArr = rules[key];</span></span><br><span class="language-javascript"><span class="language-xml">                valArr.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                    <span class="hljs-keyword">if</span> (item.<span class="hljs-property">validator</span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">                        item.<span class="hljs-property">validator</span> = item.<span class="hljs-property">validator</span>.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">this</span>);</span></span><br><span class="language-javascript"><span class="language-xml">                    &#125;</span></span><br><span class="language-javascript"><span class="language-xml">                &#125;);</span></span><br><span class="language-javascript"><span class="language-xml">            &#125;</span></span><br><span class="language-javascript"><span class="language-xml">        &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">    <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;</span></span><br><span class="language-javascript"><span class="language-xml">        <span class="hljs-keyword">return</span> (</span></span><br><span class="language-javascript"><span class="language-xml">            &lt;div class=&quot;form-box&quot;&gt;</span></span><br><span class="language-javascript"><span class="language-xml">                &lt;el-form</span></span><br><span class="language-javascript"><span class="language-xml">                    ref=&quot;form&quot;</span></span><br><span class="language-javascript"><span class="language-xml">                    rules=&#123;this.rulesForm&#125;</span></span><br><span class="language-javascript"><span class="language-xml">                    attrs=</span></span><span class="hljs-template-variable">&#123;&#123; <span class="hljs-name">model:</span> this.form &#125;&#125;</span><span class="language-xml"><span class="language-javascript"></span></span><br><span class="language-javascript"><span class="language-xml">                    label-width=<span class="hljs-string">&quot;80px&quot;</span></span></span><br><span class="language-javascript"><span class="language-xml">                &gt;</span></span><br><span class="language-javascript"><span class="language-xml">                    &#123;<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">rederRows</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">items</span>)&#125;</span></span><br><span class="language-javascript"><span class="language-xml">                    &lt;div <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;btns clear-fix&quot;</span>&gt;</span></span><br><span class="language-javascript"><span class="language-xml">                        &#123;<span class="hljs-comment">/* 没有默认插槽时 DOM */</span>&#125;</span></span><br><span class="language-javascript"><span class="language-xml">                        &#123;<span class="hljs-variable language_">this</span>.<span class="hljs-property">$slots</span>.<span class="hljs-property">default</span> ? (</span></span><br><span class="language-javascript"><span class="language-xml">                            <span class="hljs-variable language_">this</span>.<span class="hljs-property">$slots</span>.<span class="hljs-property">default</span></span></span><br><span class="language-javascript"><span class="language-xml">                        ) : (</span></span><br><span class="language-javascript"><span class="language-xml">                            <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                <span class="hljs-tag">&lt;<span class="hljs-name">el-button</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                    <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;success&quot;</span></span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                    <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> this.submit()&#125;</span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                &gt;</span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                    提交</span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                <span class="hljs-tag">&lt;/<span class="hljs-name">el-button</span>&gt;</span></span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                <span class="hljs-tag">&lt;<span class="hljs-name">el-button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> this.reset()&#125;&gt;</span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                    重置</span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                                <span class="hljs-tag">&lt;/<span class="hljs-name">el-button</span>&gt;</span></span></span></span><br><span class="language-xml"><span class="language-javascript"><span class="language-xml">                            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span></span><br><span class="language-javascript"><span class="language-xml">                        )&#125;</span></span><br><span class="language-javascript"><span class="language-xml">                        &#123;<span class="hljs-comment">/* 仅仅填DOM,给父传递参数this.$scopedSlots.default(data) */</span>&#125;</span></span><br><span class="language-javascript"><span class="language-xml">                    &lt;/div&gt;</span></span><br><span class="language-javascript"><span class="language-xml">                &lt;/el-form&gt;</span></span><br><span class="language-javascript"><span class="language-xml">            &lt;/div&gt;</span></span><br><span class="language-javascript"><span class="language-xml">        );</span></span><br><span class="language-javascript"><span class="language-xml">    &#125;,</span></span><br><span class="language-javascript"><span class="language-xml">&#125;;</span></span><br><span class="language-javascript"><span class="language-xml"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;scss&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>需要将外部传递初始数据进行数据劫持 使用 <a target="_blank" rel="noopener" href="https://v2.cn.vuejs.org/v2/api/#Vue-set">Vue.set</a></li>
+<li>将传递校验属性 this 指向改变</li>
+<li>注意一些值的改变影响做深拷贝 以免一些不必要的情况出现</li>
+</ol>
+<h4 id="基础组件"><a href="#基础组件" class="headerlink" title="基础组件"></a>基础组件</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;</span><br><span class="language-javascript">    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;columsItem&#x27;</span>,</span><br><span class="language-javascript">    <span class="hljs-attr">components</span>: &#123;&#125;,</span><br><span class="language-javascript">    <span class="hljs-attr">props</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">columsData</span>: &#123;</span><br><span class="language-javascript">            <span class="hljs-attr">type</span>: <span class="hljs-title class_">Object</span>,</span><br><span class="language-javascript">            <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,</span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">        <span class="hljs-attr">value</span>: &#123;</span><br><span class="language-javascript">            <span class="hljs-attr">required</span>: <span class="hljs-literal">true</span>,</span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-attr">model</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">prop</span>: <span class="hljs-string">&#x27;value&#x27;</span>,</span><br><span class="language-javascript">        <span class="hljs-attr">event</span>: <span class="hljs-string">&#x27;changeVal&#x27;</span>,</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-title function_">data</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">return</span> &#123;</span><br><span class="language-javascript">            <span class="hljs-attr">val</span>: <span class="hljs-string">&#x27;&#x27;</span>,</span><br><span class="language-javascript">        &#125;;</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-attr">computed</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-title function_">span</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">columsData</span>;</span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-attr">watch</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-attr">val</span>: &#123;</span><br><span class="language-javascript">            <span class="hljs-attr">deep</span>: <span class="hljs-literal">true</span>,</span><br><span class="language-javascript">            <span class="hljs-title function_">handler</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">                <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">changeVal</span>();</span><br><span class="language-javascript">            &#125;,</span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-title function_">created</span>(<span class="hljs-params"></span>) &#123;&#125;,</span><br><span class="language-javascript">    <span class="hljs-title function_">mounted</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-comment">// console.log(this.value, 11, &#x27;columsData&#x27;, this.columsData);</span></span><br><span class="language-javascript">        <span class="hljs-variable language_">this</span>.<span class="hljs-property">val</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">deepClone</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">value</span>);</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-attr">methods</span>: &#123;</span><br><span class="language-javascript">        <span class="hljs-comment">/** 深拷贝 */</span></span><br><span class="language-javascript">        <span class="hljs-title function_">deepClone</span>(<span class="hljs-params">data</span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-keyword">return</span> <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(data));</span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">        <span class="hljs-comment">/** 双向绑定事件 */</span></span><br><span class="language-javascript">        <span class="hljs-title function_">changeVal</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-comment">// 反馈事件名称与model 中事件名称一致</span></span><br><span class="language-javascript">            <span class="hljs-variable language_">this</span>.$emit(<span class="hljs-string">&#x27;changeVal&#x27;</span>, <span class="hljs-variable language_">this</span>.<span class="hljs-property">val</span>);</span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">        <span class="hljs-comment">/** 渲染当前表单元素 */</span></span><br><span class="language-javascript">        <span class="hljs-title function_">renderItem</span>(<span class="hljs-params">item</span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-keyword">switch</span> (item.<span class="hljs-property">type</span>) &#123;</span><br><span class="language-javascript">                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;input&#x27;</span>:</span><br><span class="language-javascript">                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;password&#x27;</span>:</span><br><span class="language-javascript">                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;textarea&#x27;</span>:</span><br><span class="language-javascript">                    <span class="hljs-keyword">return</span> (</span><br><span class="language-javascript">                        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-input</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                            <span class="hljs-attr">type</span>=<span class="hljs-string">&#123;item.type&#125;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                            <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#123;this.val&#125;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                            <span class="hljs-attr">attrs</span>=<span class="hljs-string">&#123;item.attrs&#125;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                        &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">el-input</span>&gt;</span></span></span><br><span class="language-javascript">                    );</span><br><span class="language-javascript">                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;radio&#x27;</span>:</span><br><span class="language-javascript">                    <span class="hljs-keyword">return</span> (</span><br><span class="language-javascript">                        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-radio-group</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#123;this.val&#125;</span>&gt;</span></span></span><br><span class="language-xml"><span class="language-javascript">                            &#123;item.options.map((opt, i) =&gt; &#123;</span></span><br><span class="language-xml"><span class="language-javascript">                                return (</span></span><br><span class="language-xml"><span class="language-javascript">                                    <span class="hljs-tag">&lt;<span class="hljs-name">el-radio</span> <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;i&#125;</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&#123;opt.label&#125;</span>&gt;</span></span></span><br><span class="language-xml"><span class="language-javascript">                                        &#123;opt.text&#125;</span></span><br><span class="language-xml"><span class="language-javascript">                                    <span class="hljs-tag">&lt;/<span class="hljs-name">el-radio</span>&gt;</span></span></span><br><span class="language-xml"><span class="language-javascript">                                );</span></span><br><span class="language-xml"><span class="language-javascript">                            &#125;)&#125;</span></span><br><span class="language-xml"><span class="language-javascript">                        <span class="hljs-tag">&lt;/<span class="hljs-name">el-radio-group</span>&gt;</span></span></span><br><span class="language-javascript">                    );</span><br><span class="language-javascript"></span><br><span class="language-javascript">                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;select&#x27;</span>:</span><br><span class="language-javascript">                    <span class="hljs-keyword">return</span> (</span><br><span class="language-javascript">                        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-select</span> <span class="hljs-attr">attrs</span>=<span class="hljs-string">&#123;item.attrs&#125;</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#123;this.val&#125;</span>&gt;</span></span></span><br><span class="language-xml"><span class="language-javascript">                            &#123;item.options.map((opt) =&gt; &#123;</span></span><br><span class="language-xml"><span class="language-javascript">                                return (</span></span><br><span class="language-xml"><span class="language-javascript">                                    <span class="hljs-tag">&lt;<span class="hljs-name">el-option</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                                        <span class="hljs-attr">key</span>=<span class="hljs-string">&#123;opt.value&#125;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                                        <span class="hljs-attr">label</span>=<span class="hljs-string">&#123;opt.label&#125;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                                        <span class="hljs-attr">value</span>=<span class="hljs-string">&#123;opt.value&#125;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                                    &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">el-option</span>&gt;</span></span></span><br><span class="language-xml"><span class="language-javascript">                                );</span></span><br><span class="language-xml"><span class="language-javascript">                            &#125;)&#125;</span></span><br><span class="language-xml"><span class="language-javascript">                        <span class="hljs-tag">&lt;/<span class="hljs-name">el-select</span>&gt;</span></span></span><br><span class="language-javascript">                    );</span><br><span class="language-javascript">                <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;datetime&#x27;</span>:</span><br><span class="language-javascript">                    <span class="hljs-keyword">return</span> (</span><br><span class="language-javascript">                        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-date-picker</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                            <span class="hljs-attr">attrs</span>=<span class="hljs-string">&#123;item.attrs&#125;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                            <span class="hljs-attr">v-model</span>=<span class="hljs-string">&#123;this.val&#125;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                            <span class="hljs-attr">value-format</span>=<span class="hljs-string">&#123;item.valueFormat&#125;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                            <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;date&quot;</span></span></span></span><br><span class="hljs-tag"><span class="language-xml"><span class="language-javascript">                        &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">el-date-picker</span>&gt;</span></span></span><br><span class="language-javascript">                    );</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">        &#125;,</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">    <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;this.renderItem(this.span)&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;</span><br><span class="language-javascript">    &#125;,</span><br><span class="language-javascript">&#125;;</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">style</span> <span class="hljs-attr">scoped</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;scss&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>renderItem 做种 type 渲染 单项数据在这里维护</li>
+<li>attrs 调用原声属性 在这里做扩展口子</li>
+<li>做组件的 model 双向数据绑定写法</li>
+</ol>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><p><img src="/img/2022/form3.png" srcset="/img/loading.gif" lazyload alt="表单1"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs php">export <span class="hljs-keyword">default</span> &#123;<br>    items: Object.<span class="hljs-title function_ invoke__">freeze</span>([<br>        [<br>            &#123;<br>                <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;input&#x27;</span>,<br>                <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;用户名&#x27;</span>,<br>                <span class="hljs-attr">colspan</span>: <span class="hljs-number">12</span>,<br>                <span class="hljs-attr">value</span>: <span class="hljs-string">&#x27;2222&#x27;</span>,<br>                <span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;username&#x27;</span>,<br>                <span class="hljs-attr">show</span>: <span class="hljs-literal">true</span>,<br>            &#125;,<br>        ],<br>        [&#123; <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;password&#x27;</span>, <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;密码&#x27;</span>, <span class="hljs-attr">colspan</span>: <span class="hljs-number">12</span>, <span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;password&#x27;</span>, <span class="hljs-attr">attrs</span>: &#123; <span class="hljs-attr">placeholder</span>:<span class="hljs-string">&#x27;请输入密码&#x27;</span>,&#125; &#125;],<br>        [&#123;<br>                <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;password&#x27;</span>,<br>                <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;确认密码&#x27;</span>,<br>                <span class="hljs-attr">colspan</span>: <span class="hljs-number">12</span>,<br>                <span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;confirmPwd&#x27;</span>,<br>         &#125;],<br>        [&#123;<br>                <span class="hljs-attr">colspan</span>: <span class="hljs-number">8</span>,<br>                <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;radio&#x27;</span>,<br>                <span class="hljs-attr">label</span>: <span class="hljs-string">&#x27;权限分配&#x27;</span>,<br>                <span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;permission&#x27;</span>,<br>                <span class="hljs-attr">value</span>: <span class="hljs-string">&#x27;2&#x27;</span>,<br>                <span class="hljs-attr">options</span>: Dic.RY_TY,<br>        &#125;],<br>    ]),<br>    rules: &#123;<br>        username: [&#123; required: <span class="hljs-literal">true</span>, message: <span class="hljs-string">&#x27;输入用户名&#x27;</span> &#125;],<br>        password: [&#123; required: <span class="hljs-literal">true</span>, message: <span class="hljs-string">&#x27;输入密码&#x27;</span> &#125;],<br>        confirmPwd: [&#123; validator: validatePass2, trigger: <span class="hljs-string">&#x27;blur&#x27;</span> &#125;],<br>        permission: [&#123; required: <span class="hljs-literal">true</span> &#125;],<br>    &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/1.jpg" srcset="/img/loading.gif" lazyload alt="BG图片"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Vue/">Vue</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/vue/">vue</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/09/13/2022/2022-09/09-13table%E8%A1%A8%E6%A0%BC%E5%90%88%E5%B9%B6%E8%A1%8C/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Element-ui 表格合并行</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/10/2022/2022-07/07-10%E4%B8%89%E7%BA%A7%E6%9D%83%E9%99%90/">
+                        <span class="hidden-mobile">vue router axios 用户的三级权限</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
