@@ -1971,3 +1971,6 @@ note-default {
     margin-left: 1rem;
   }
 }
+body {
+  filter: grayscale(100%) !important;
+}
